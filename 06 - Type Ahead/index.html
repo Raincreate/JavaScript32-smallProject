@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+      
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+  // const prom=fetch(endpoint)
+  // console.log(prom);
+  // 1、获取数据
+  const citise =[]
+  fetch(endpoint).then(response=> response.json())
+  .then(data => citise.push(...data))
+
+  // 2、筛选数据
+  function filterData(words,citise){
+    const newR=new RegExp(words,'gi')
+    return citise.filter(data =>{
+      return data.city.match(newR) || data.state.match(newR)
+    })
+  }
+
+  // 分割数组的方法
+  function numberWith(x){
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')
+  }
+
+  // 3、展示数据
+  function showDate(){
+    const showD =filterData(this.value,citise)
+    const html=showD.map(data=>{
+      // 下面三行代码的主要目的是为了能够在搜索的时候，结果高亮
+      const regs=new RegExp(this.value,'gi')
+      // 通过使用replace的方法将输入框中的内容替换成高亮效果的样式
+      const cityName=data.city.replace(regs,`<span class="hl">${this.value}</span>`)
+      const stateName=data.state.replace(regs,`<span class="hl">${this.value}</span>`)
+      return `
+        <li>
+          <span class="name">${cityName} - ${stateName}</span>
+          <span class="pupalation">${numberWith(data.population)}</span>
+        </li>
+      `
+    }).join('')
+
+    suggestions.innerHTML=html
+  }
+
+  const inputs=document.querySelector('.search')
+  inputs.addEventListener('change',showDate)
+  // 绑定keyup可以实现当在搜索的时候，实时显示出相应的结果
+  inputs.addEventListener('keyup',showDate)
+  const suggestions=document.querySelector('.suggestions')
+</script>
+</body>
+</html>

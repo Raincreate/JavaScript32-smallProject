@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+  <style>
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
+  
+    body {
+      margin: 0;
+    }
+  
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
+  
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0,0,0,1);
+      font-size: 100px;
+    }
+    </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 >文本出现阴影</h1>
+  </div>
+
+  <script>
+    // 首先获取页面标签
+    const hero=document.querySelector('.hero')
+    const h1Text=document.querySelector('h1')
+    // 设置一个值，这样能够实现阴影的移动
+    const num=200
+
+    // 函数主要功能是实现阴影效果
+    function mouseMove(e){
+      const { offsetWidth: width, offsetHeight: height } = hero;
+      let { offsetX: x, offsetY: y } = e;
+      // 在这里进行判断的原因是页面中div和h1在鼠标移动的时候会出现移动的数字突然变化，是因为h1和div都有自己的宽高
+      if(this !== e.target){
+        x = x + e.target.offsetLeft;
+        y = y + e.target.offsetTop;
+      }
+      const X = Math.round((x / width * num) - (num / 2));
+      const Y = Math.round((y / height * num) - (num / 2));
+
+      h1Text.style.textShadow=`
+        ${X}px ${Y}px 0 rgba(0,0,0,0.5)
+      `
+    }
+
+    // 当鼠标移动的时候监听
+    hero.addEventListener('mousemove',mouseMove)
+  </script>
+</body>
+</html>

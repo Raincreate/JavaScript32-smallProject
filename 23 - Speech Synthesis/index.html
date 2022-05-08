@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Synthesis</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="voiceinator">
+
+      <h1>The Voiceinator 5000</h1>
+
+      <select name="voice" id="voices">
+        <option value="">Select A Voice</option>
+      </select>
+
+      <label for="rate">语速:</label>
+      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+
+      <label for="pitch">音高:</label>
+
+      <input name="pitch" type="range" min="0" max="2" step="0.1">
+      <textarea name="text">你好，生活！</textarea>
+      <button id="stop">停止!</button>
+      <button id="speak">开始</button>
+
+    </div>
+
+<script>
+  // 选择语言的select列表
+  const selectArr=document.querySelector('[name="voice"]')
+  // 获取开始暂停的标签
+  const stopButton =document.querySelector('#stop')
+  const speakButton=document.querySelector('#speak')
+  // 当点击音量以及速率的标签
+  const optionsArr=document.querySelectorAll('[type="range"],[name="text"]') 
+
+
+  // 调用一个API，这个API的作用主要是将文本读出来
+  const speech=new SpeechSynthesisUtterance()
+  speech.text=document.querySelector('[name="text"]').value
+  let voices=[]
+
+  // 这个函数是通过绑定两个按钮来实现读文本和停止读文本
+  function fun(startMove=true){
+    if(startMove){
+      speechSynthesis.speak(speech)
+    }else{
+      speechSynthesis.cancel(speech)
+    }
+  }
+
+  // 函数主要功能就是将语言种类渲染到相应的界面上
+  function changeSpeech(){
+    // 这个时候获得的是一个数组的值
+    voices=this.getVoices();
+    const optionHtml=voices.map(voice=>{
+      return `
+        <option value="${voice.lang}">${voice.name} ${voice.lang}</option>
+      `
+    }).join('')
+    // 将获得到的所有的值全部都渲染在页面上
+    selectArr.innerHTML=optionHtml
+  }
+
+  // 当点击更换语言种类后的函数
+  function setVoce(){
+    // console.log(this);
+    speech.voice=voices.find(voice=> voice.lang === this.value)
+    fun()
+  }
+
+  // 调整语速以及音量键的函数
+  function changeAll(){
+    // console.log(this.name,this.value);
+    speech[this.name]=this.value
+    fun()
+  }
+  speakButton.addEventListener('click',fun)
+  stopButton.addEventListener('click',()=>fun(false))
+
+  speechSynthesis.addEventListener('voiceschanged',changeSpeech)
+
+  selectArr.addEventListener('change',setVoce)
+
+  optionsArr.forEach(options => options.addEventListener('change',changeAll))
+</script>
+
+</body>
+</html>

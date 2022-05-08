@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪花飘落特效</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            font-family: "微软雅黑";
+            font-size: 13px;
+            color: #fff;
+        }
+
+        body{
+            background: #69c1f4;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 定义窗口大小
+        var oPageX=window.screen.width;
+        var oPageY=window.screen.height;
+        // 创建数组是为了能够接收每次创建的“雪花”
+        var snowArr =[]
+
+        function snowAll(x,y,xspeed,yspeed,xsin,size){
+            // 创建一个div div的作用是一片“雪花”
+            this.snowDiv=document.createElement('div')
+            // 接收参数
+            this.x=x;
+            this.y=y;
+            this.xspeed=xspeed;
+            this.yspeed=yspeed;
+            this.xsin=xsin;
+            this.size=size;
+
+            // 创建‘雪’的信息
+            this.createSnows =function(){
+                this.snowDiv.style.position ='absolute';
+                this.snowDiv.style.top =this.y +'px';
+                this.snowDiv.style.left =this.x+'px';
+                this.snowDiv.innerHTML='*';
+                document.body.appendChild(this.snowDiv)
+            };
+
+            // 调用
+            this.createSnows();
+            // 雪花移动
+            this.snowMove =function(){
+                this.snowDiv.style.top=parseInt(this.snowDiv.style.top)+this.yspeed+'px';
+                this.snowDiv.style.left =parseInt(this.snowDiv.style.left)+this.xsin*Math.sin(this.xspeed)+'px';
+                this.snowDiv.style.fontSize=this.size +'px'
+            }
+            
+        }
+
+        function createSnows(){
+            snowArr.push(new snowAll(Math.random()*oPageX,Math.random()*oPageY,0.02+Math.random()/10,1+Math.random(),Math.random()*30,20+Math.random()*30))
+        }
+
+        // 在100毫秒产生一篇雪花
+        setInterval(createSnows,100)
+
+        function snowMove(){
+            for(let i=0;i<snowArr.length;i++){
+                snowArr[i].snowMove();
+                if(parseInt(snowArr[i].snowDiv.style.top) > oPageY || parseInt(snowArr[i].snowDiv.style.left) >oPageX ){
+                    snowArr[i].snowDiv.parentNode.removeChild(snowArr[i].snowDiv)
+                    snowArr.splice(i,1)
+                }
+            }
+        }
+
+        
+        setInterval(snowMove,10)
+    </script>
+
+    
+</body>
+</html>

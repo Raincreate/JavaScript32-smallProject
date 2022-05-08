@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+    
+    *, *:before, *:after { 
+      box-sizing: inherit; 
+    }
+  
+    div {
+      width: 100%;
+      padding: 100px;
+    }
+  
+    .one {
+      background: thistle;
+    }
+  
+    .two {
+      background: mistyrose;
+    }
+  
+    .three {
+      background: coral;
+    }
+  </style>
+</head>
+<body class="bod">
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+  <button>这是一个按钮</button>
+
+  <script>
+    const divArr=document.querySelectorAll('div')
+    const btn=document.querySelector('button')
+
+    // 在控制台展示信息
+    function showData(){
+      console.log(this.classList.value);
+    }
+
+    // 这样写能够解决当点击最内侧数字的时候，不重复的情况
+    divArr.forEach(item=>item.addEventListener('click',showData,{
+      capture:false,
+      once:true
+    }))
+
+    // 给button绑定函数，让他只能够点击一次
+    btn.addEventListener('click',()=>console.log('click'),{
+      once:true
+    })
+  </script>
+</body>
+</html>

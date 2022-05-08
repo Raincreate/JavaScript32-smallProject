@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+  <canvas id="draw" width="800" height="800"></canvas>
+
+<script>
+  // 获取画布，并设置它的宽高度
+  const canvas=document.querySelector('#draw')
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+
+  const cts=canvas.getContext('2d')
+  // 设置颜色
+  cts.strokeStyle='#BADA55';
+  // 交点处为圆的
+  cts.lineJoin='round'
+  cts.lineCap='round'
+  cts.lineWidth=20;
+
+  let isDraw =false
+  let lastX=0;
+  let lastY=0;
+  let hue =0;
+
+  function draw(e){
+    // console.log(e);
+    if(!isDraw) return;
+    cts.strokeStyle=`hsl(${hue},100%,50%)`;
+    // 开始一个新的路径
+    cts.beginPath();
+    // 路径的起始点
+    cts.moveTo(lastX,lastY)
+    // 路径的结束的点
+    cts.lineTo(e.offsetX,e.offsetY);
+    cts.stroke()
+    lastX=e.offsetX
+    lastY=e.offsetY
+    hue++
+    if(hue >=359){
+      hue=0
+    }
+    
+  }
+
+  canvas.addEventListener('mousemove',draw);
+  canvas.addEventListener('mousedown',(e)=>{
+    isDraw=true;
+    [lastX,lastY]=[e.offsetX,e.offsetY]
+  })
+  canvas.addEventListener('mouseup',()=> isDraw=false)
+  canvas.addEventListener('mouseout',()=> isDraw=false)
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>

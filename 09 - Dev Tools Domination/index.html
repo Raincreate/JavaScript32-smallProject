@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    // 这个的意思就是常规控制台的使用方法
+    console.log('hello');
+
+    // Interpolated
+    console.log('this is a %s','girl');
+    // 它的输出就是 this is a girl有点类似与c的写法
+
+    // Styled
+    // 在控制台控制输出的样式(讲真这基本上也用不到)
+    console.log('%c styled texts','font-size:14px;color:pink;');
+
+    // warning!
+    // 输出警告
+    console.warn('这是一个警告的信息')
+
+    // Error :|
+    // 错误的显示
+    console.error('报错的样式')
+
+    // Info
+    // 输出一些信息
+    console.log('信息');
+
+    // Testing
+    // 测试一些东西
+    console.assert(1===2,'错误信息')
+
+    // clearing
+    // 清空控制台
+    console.clear()
+
+    // Viewing DOM Elements
+    
+    // Grouping together
+    // 分组
+
+    // counting
+    // 计数
+    console.count('hello')
+
+    // timing
+    // 调用的时间
+
+    // table 按照表格形式展示
+    console.table({})
+
+  </script>
+</body>
+</html>

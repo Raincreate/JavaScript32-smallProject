@@ -1,0 +1,206 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html{
+    background: url('../imag/bg.jpg') no-repeat;
+    /* background-size是可以调整背景图片的大小 */
+    background-size: cover;
+}
+
+html{
+    font: 10px "微软雅黑","sans-serif";
+    /* 水平居中 */
+    text-align: center; 
+}
+
+body{
+    /* 根据页面的大小clock中的元素变化 */
+    font-size: 2rem;
+    min-height: 100vh;
+    /* 因为设置了flex布局，所以上面写的text-align失效 */
+    display: flex;
+    /* 水平居中 */
+    justify-content: center;
+    /* 垂直居中 */
+    align-items: center;
+    flex: 1;
+}
+
+#clock{
+    /*让数字变化*/background: rgba(255,255,255,0.8);
+    /*弹性布局导致所有的值全都挤在一起*/display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30rem;
+    height: 30rem;
+    border: 10px solid #000;
+    /* 将正方形通过圆角转换为一个圆形 */
+    border-radius:50% ;
+    padding: 2rem;
+    box-shadow: 
+     0 0 0 4px rgba(0, 0, 0, 0.1)
+     inset 0 0 0 3px #efefef
+     inset 0 0 10px black
+     0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    /* 通过子绝夫相来确定数字1-12的位置 */
+}
+
+/* 12 */
+#clock strong:nth-child(1){
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -13px;
+}
+
+/* 1 */
+#clock strong:nth-child(2){
+    position: absolute;
+    top: 15%;
+    left: 68%;
+    margin-top: -16px;
+}
+
+/* 2 */
+#clock strong:nth-child(3){
+    position: absolute;
+    top: 31%;
+    left: 83%;
+    margin-top: -16px;
+}
+
+/* 3 */
+#clock strong:nth-child(4){
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    margin-top: -16px;
+}
+
+/* 4 */
+#clock strong:nth-child(5){
+    position: absolute;
+    top: 70%;
+    left: 83%;
+    margin-top: -16px;
+}
+
+/* 5 */
+#clock strong:nth-child(6){
+    position: absolute;
+    top: 85%;
+    left: 68%;
+    margin-top: -16px;
+}
+
+/* 6 */
+#clock strong:nth-child(7){
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-top: -7px;
+}
+
+/* 7 */
+#clock strong:nth-child(8){
+    position: absolute;
+    bottom: 12%;
+    left: 27%;
+    margin-top: -16px;
+}
+
+/* 8 */
+#clock strong:nth-child(9){
+    position: absolute;
+    bottom: 28%;
+    left: 11%;
+    margin-top: -16px;
+}
+
+/* 9 */
+#clock strong:nth-child(10){
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    margin-top: -16px;
+}
+
+/* 10 */
+#clock strong:nth-child(11){
+    position: absolute;
+    top: 30%;
+    left: 9%;
+    margin-top: -16px;
+}
+
+/* 11 */
+#clock strong:nth-child(12){
+    position: absolute;
+    bottom: 82%;
+    left: 24%;
+    margin-top: -7px;
+}
+
+/*  */
+.clock-face{
+    position: relative;
+    width: 85%;
+    height: 85%
+}
+
+/* 表盘的中心黑点 */
+.clock-face .middle{
+    width: 1rem;
+    height: 1rem;
+    background: #000;
+    border-radius: 50%;
+    border: 3px solid #000;
+    /* 第二种居中定位的方法 */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* 但是很尴尬的是因为数字12和6并没有居中对齐，所以需要调整一下位置 */
+    margin-left: -8px;
+    margin-top: -10px;
+}
+
+/* 这个调整的是所有的指针的位置 */
+.clock-face .hand{
+    width: 50%;
+    background: #000;
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+}
+
+.clock-face .hand{
+    /*使元素沿着某一基点进行旋转，位移:;
+    主要是用于旋转的*/transform-origin: 100%;
+    transform:rotate(90deg) ;
+    -webkit-transform:rotate(90deg) ;
+    -moz-transform:rotate(90deg) ;
+    -ms-transform:rotate(90deg) ;
+    -o-transform:rotate(90deg) ;
+
+    transition: all 0.05s linear;
+    -webkit-transition: all 0.05s linear;
+    -moz-transition: all 0.05s linear;
+    -ms-transition: all 0.05s linear;
+    -o-transition: all 0.05s linear;
+}
+
+.clock-face .second-hand{
+    height: .1rem;
+    background-color: red;
+}
+
+.clock-face .minute-hand{
+    height: .3rem;
+}
+
+.clock-face .hour-hand{
+    height: .5rem;
+}
